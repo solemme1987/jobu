@@ -10,13 +10,13 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.usersPath = '/api/users';
+        this.recruiterPath = '/api/recruiters';
 
         // CONNECTAR LA BASE DE DATOS
         this.connectDb();
 
         // MIDLEWARES
         this.midlewares();
-
 
         // RUTAS DE MI APP
         this.routes();
@@ -44,11 +44,12 @@ class Server {
         //cuando la url sea en este caso http://localhost:8080/api/usuarios que
         // me  ejcute  lo que hay en el archivo user.js  ya sea put, get, post, etc...
         this.app.use(this.usersPath, require('../routes/user.routes'));
+        this.app.use(this.recruiterPath, require('../routes/recruiter.routes'));
     }
 
     listen() {
         this.app.listen(this.port, () => {
-            console.log('Mi aplicacion está corriendo en el puero', this.port);
+            console.log('Mi aplicacion está corriendo en el puerto', this.port);
         });
     }
 

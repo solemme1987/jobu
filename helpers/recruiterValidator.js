@@ -1,5 +1,5 @@
 const RoleModel = require('../models/roleModel');
-const UserModel = require('../models/userModel');
+const RecruiterModel = require('../models/recruiterModel');
 const CountryModel = require('../models/countryModel');
 
 // VALIDAR QUE EL ROL SELECCIONADO SE ENCUENTRE REGISTRADO EN LA BD
@@ -17,20 +17,19 @@ const isCountry = async(country = '') => {
     }
 };
 
-// VALIDAR QUE NO SE REPITA CORREO ELCTRONICO  DEL USUARIO
+// VALIDAR QUE NO SE REPITA CORREO ELCTRONICO  DE LA EMPRESA
 const emailNoRepeat = async(email = '') => {
-    const searchEmail = await UserModel.findOne({ email });
+    const searchEmail = await RecruiterModel.findOne({ email });
     if (searchEmail) {
-        throw new Error(`El correo ${email} ya ha sido registrado en la bd`);
+        throw new Error(`Otra Empresa ya está utilizando el email: ${email}`);
     }
 };
 
-
-// VALIDAR QUE El usuario con ese id si exista
-const isUserId = async(id = '') => {
-    const searchUser = await UserModel.findById(id);
-    if (!searchUser) {
-        throw new Error(`No Existe un usuario Registrado con el  id: ${id}`);
+// VALIDAR QUE LA EMPRESA CON ESE ID A ACTUALIZAR EXISTA
+const isRecruiterID = async(id = '') => {
+    const searchRecruiter = await RecruiterModel.findById(id);
+    if (!searchRecruiter) {
+        throw new Error(`No Existe una empresa con ese id Registrado con el  id: ${id}`);
     }
 };
 
@@ -43,7 +42,7 @@ const validateTerms = async(terms = '') => {
 module.exports = {
     isRole,
     emailNoRepeat,
-    isUserId,
+    isRecruiterID,
     isCountry,
     validateTerms,
 
